@@ -105,14 +105,8 @@
                 <x-responsive-nav-link :href="route('siswas.index')" :active="request()->routeIs('siswas.*')">
                     Daftar Siswa
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('siswas.create')">
-                    Tambah Siswa
-                </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('gurus.index')" :active="request()->routeIs('gurus.*')">
                     Daftar Guru
-                </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('gurus.create')">
-                    Tambah Guru
                 </x-responsive-nav-link>
             @endif
         </div>
