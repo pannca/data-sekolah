@@ -228,12 +228,6 @@ php artisan view:clear
 
 MIT License - bebas digunakan untuk pembelajaran dan pengembangan.
 
-## 📞 Support
-
-Untuk pertanyaan atau bantuan:
-- Email: support@sekolah.com
-- Issues: GitHub Issues
-
 ---
 
 **Dibuat dengan ❤️ menggunakan Laravel & Tailwind CSS**
