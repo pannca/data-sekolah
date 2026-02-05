@@ -16,7 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string('name');
             $table->integer('umur');
-            $table->integer('nuptk');
+            $table->string('nuptk');
             $table->string('mapel');
             $table->enum('jenis_kelamin', ['L', 'P']);
         });

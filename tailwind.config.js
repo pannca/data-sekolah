@@ -10,10 +10,34 @@ export default {
     ],
 
     theme: {
+        container: {
+            center: true,
+            padding: {
+                DEFAULT: '1rem',
+                sm: '1rem',
+                lg: '2rem',
+            },
+        },
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                primary: {
+                    DEFAULT: '#2563EB',
+                    600: '#2563EB',
+                    700: '#1D4ED8',
+                },
+                accent: {
+                    DEFAULT: '#10B981'
+                },
+                muted: {
+                    DEFAULT: '#6B7280'
+                },
+                surface: {
+                    DEFAULT: '#F3F4F6'
+                }
+            }
         },
     },
 

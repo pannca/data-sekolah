@@ -1,70 +1,96 @@
-@extends('layouts.layout')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            ➕ Tambah Guru
+        </h2>
+    </x-slot>
 
-@section('content')
-    <form action="{{ route('gurus.store') }}" method="POST" class="card p-4 shadow-sm rounded border-0 bg-light">
-        @csrf
-        @if(Session::get('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ Session::get('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <div class="py-12">
+        <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6">
+                    @if(Session::get('success'))
+                        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+                            {{ Session::get('success') }}
+                        </div>
+                    @endif
+                    @if ($errors->any())
+                        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                            <ul class="list-disc list-inside">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <form action="{{ route('gurus.store') }}" method="POST" class="space-y-6">
+                        @csrf
+                        
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap</label>
+                            <input type="text" id="name" name="name" value="{{ old('name') }}" 
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 @error('name') border-red-500 @enderror" 
+                                   placeholder="Masukkan nama lengkap">
+                            @error('name')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label for="umur" class="block text-sm font-medium text-gray-700 mb-2">Umur</label>
+                            <input type="number" id="umur" name="umur" value="{{ old('umur') }}" 
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 @error('umur') border-red-500 @enderror" 
+                                   placeholder="Masukkan umur" min="20" max="65">
+                            @error('umur')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label for="nuptk" class="block text-sm font-medium text-gray-700 mb-2">NUPTK</label>
+                            <input type="text" id="nuptk" name="nuptk" value="{{ old('nuptk') }}" 
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 @error('nuptk') border-red-500 @enderror" 
+                                   placeholder="Nomor Unik Pendidik dan Tenaga Kependidikan">
+                            @error('nuptk')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label for="mapel" class="block text-sm font-medium text-gray-700 mb-2">Mata Pelajaran</label>
+                            <input type="text" id="mapel" name="mapel" value="{{ old('mapel') }}" 
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 @error('mapel') border-red-500 @enderror" 
+                                   placeholder="Masukkan mata pelajaran">
+                            @error('mapel')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label for="jenis_kelamin" class="block text-sm font-medium text-gray-700 mb-2">Jenis Kelamin</label>
+                            <select id="jenis_kelamin" name="jenis_kelamin" 
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 @error('jenis_kelamin') border-red-500 @enderror">
+                                <option value="" disabled selected>Pilih jenis kelamin</option>
+                                <option value="Laki-laki" {{ old('jenis_kelamin') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+                                <option value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+                            </select>
+                            @error('jenis_kelamin')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="flex items-center justify-between pt-4">
+                            <a href="{{ route('gurus.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md transition duration-200">
+                                Kembali
+                            </a>
+                            <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-md transition duration-200">
+                                Simpan Data
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        @endif  
-        @if ($errors->any())
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <ul class="mb-0">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
-
-        <h4 class="text-center mb-3">Tambah guru</h4>
-
-        <div class="mb-3">
-            <label for="name" class="form-label">Nama:</label>
-            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" placeholder="Nama Lengkap">
-            @error('name')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
         </div>
-
-        <div class="mb-3">
-            <label for="umur" class="form-label">Umur:</label>
-            <input type="number" class="form-control @error('umur') is-invalid @enderror" id="umur" name="umur" value="{{ old('umur') }}" placeholder="Masukan Umur Anda..">
-            @error('umur')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-
-        <div class="mb-3">
-            <label for="nuptk" class="form-label">Nuptk:</label>
-            <input type="number" class="form-control @error('nuptk') is-invalid @enderror" id="nuptk" name="nuptk" value="{{ old('nuptk') }}" placeholder="Nomor Unik Pendidik dan Tenaga Kependidikan">
-            @error('nuptk')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-
-        <div class="mb-3">
-            <label for="mapel" class="form-label">Mapel:</label>
-            <input type="text" class="form-control @error('mapel') is-invalid @enderror" id="mapel" name="mapel" value="{{ old('mapel') }}" placeholder="Mata Pelajaran">
-            @error('mapel')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-
-        <div class="mb-3 row">
-            <label for="jenis_kelamin" class="col-sm-1.5 col-form-label">Jenis Kelamin: </label>
-            <div class="col-sm-10">
-                <select class="form-select" name="jenis_kelamin" id="jenis_kelamin">
-                    <option selected disabled hidden>Pilih</option>
-                    <option value="L" {{ old('jenis_kelamin') == 'L' ? 'selected' : '' }}>Laki-Laki</option>
-                    <option value="p" {{ old('jenis_kelamin') == 'P' ? 'selected' : '' }}>Perempuan</option>
-                </select>
-            </div>
-        </div>
-
-        <button type="submit" class="btn btn-primary w-100">Simpan</button>
-    </form>
-@endsection
+    </div>
+</x-app-layout>
