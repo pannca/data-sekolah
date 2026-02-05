@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\GuruController;
@@ -16,8 +17,12 @@ use App\Http\Controllers\GuruController;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('welcome');
 });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::prefix('/siswa')->name('siswas.')->group(function () {
 
@@ -29,7 +34,7 @@ Route::prefix('/siswa')->name('siswas.')->group(function () {
     Route::delete('/{id}', [SiswaController::class, 'destroy'])->name('delete');
 });
 
-Route::prefix('/guru')->name('gurus.')->group(function(){
+Route::prefix('/guru')->name('gurus.')->group(function () {
     Route::get('/create', [GuruController::class, 'create'])->name('create');
     Route::post('/store', [GuruController::class, 'store'])->name('store');
     Route::get('/', [GuruController::class, 'index'])->name('index');
@@ -37,3 +42,11 @@ Route::prefix('/guru')->name('gurus.')->group(function(){
     Route::patch('/{id}', [GuruController::class, 'update'])->name('update');
     Route::delete('/{id}', [GuruController::class, 'destroy'])->name('delete');
 });
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__ . '/auth.php';
